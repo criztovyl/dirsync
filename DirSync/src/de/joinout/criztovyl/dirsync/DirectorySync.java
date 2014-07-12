@@ -19,9 +19,6 @@ package de.joinout.criztovyl.dirsync;
 
 import java.util.HashSet;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.joinout.criztovyl.tools.directory.index.DirectoryIndex;
 import de.joinout.criztovyl.tools.file.Path;
 
@@ -45,7 +42,7 @@ public class DirectorySync {
 	 */
 	public static final int SYNC = 3;
 
-	private final Logger logger;
+//	private final Logger logger;
 	private final DirectoryIndex first, second;
 
 	/**
@@ -58,7 +55,7 @@ public class DirectorySync {
 	 */
 	public DirectorySync(DirectoryIndex first, DirectoryIndex second) {
 
-		logger = LogManager.getLogger();
+//		logger = LogManager.getLogger();
 
 		this.first = first;
 		this.second = second;

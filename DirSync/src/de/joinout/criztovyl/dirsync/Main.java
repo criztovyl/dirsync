@@ -29,6 +29,7 @@ import de.joinout.criztovyl.commandLineParameters.Parameters;
 import de.joinout.criztovyl.dirsync.commandline.Names;
 import de.joinout.criztovyl.dirsync.commandline.parameters.DirectoryUpdateParameterParser;
 import de.joinout.criztovyl.tools.directory.index.DirectoryIndex;
+import de.joinout.criztovyl.tools.directory.index.DirectoryIndexTools;
 import de.joinout.criztovyl.tools.file.Path;
 import de.joinout.criztovyl.tools.log4j.Log4JEnvironment;
 import de.joinout.criztovyl.tools.strings.Strings;
@@ -99,12 +100,13 @@ public class Main {
 		// Set up Log4J
 		log4jenv = new Log4JEnvironment();
 		logger = LogManager.getLogger();
+		
 
 		// Print out license
 		System.out.println(Main.messages.getString("Main.License", getString("Name")));
 
 		if (logger.isInfoEnabled())
-			logger.info(Main.messages.getString("Main.StartinMsg", this
+			logger.info(Main.messages.getString("Main.StartingMsg", this
 					.getClass().getName()));
 
 		if (logger.isInfoEnabled())
@@ -165,9 +167,12 @@ public class Main {
 
 		if (logger.isTraceEnabled())
 			logger.trace(Main.messages.getString("Main.SrcDirSetup"));
+		
+		//Set up tools
+		DirectoryIndexTools ditools = new DirectoryIndexTools(separator, regex);
 
 		// Set up source directories
-		sourceDirs = setupDirectoryIndex(params.getArguments());
+		sourceDirs = ditools.indexFromPathList(params.getArguments());
 
 		if (logger.isTraceEnabled())
 			logger.trace(Main.messages.getString("Main.DestDirSetup"));
@@ -244,48 +249,4 @@ public class Main {
 			getLogger().info(Main.messages.getString("Main.EndInfo"));
 	}
 
-	/**
-	 * Creates a list of directory indexes from a list of paths.
-	 * 
-	 * @param paths
-	 *            the list of paths
-	 * @return the list of the directory indexes
-	 */
-	public ArrayList<DirectoryIndex> setupDirectoryIndex(ArrayList<String> paths) {
-
-		if (logger.isTraceEnabled())
-			logger.trace(Main.messages.getString("Main.DirIndexSetupInfo"));
-
-		// Create list for indexes been created
-		final ArrayList<DirectoryIndex> indexes = new ArrayList<>();
-
-		if (logger.isTraceEnabled())
-			logger.trace(Main.messages.getString("Main.PathIteratingInfo"));
-
-		// Iterate over all paths, create directory index and add to index list
-		// if file exists
-		for (final String path : paths)
-
-			// Add to index list if file exists
-			if (new Path(path, separator).getFile().exists()) {
-
-				if (logger.isTraceEnabled())
-					logger.trace(Main.messages
-							.getString("Main.DirIndexCreationInfo"));
-
-				indexes.add(new DirectoryIndex(new Path(path, separator), regex));
-
-				if (logger.isDebugEnabled())
-					logger.debug(Main.messages.getString(
-							"Main.DirIndexCreatedInfo", path));
-			}
-
-			else
-
-			if (logger.isWarnEnabled())
-				logger.warn(Main.messages.getString("Main.FileNotFoundInfo",
-						path));
-		// return indexes
-		return indexes;
-	}
 }
