@@ -17,9 +17,15 @@
  */
 package de.joinout.criztovyl.dirsync.commandline.actions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.joinout.criztovyl.commandLineParameters.ParameterAction;
 import de.joinout.criztovyl.commandLineParameters.Parameters;
 import de.joinout.criztovyl.dirsync.Main;
+import de.joinout.criztovyl.dirsync.commandline.Names;
+import de.joinout.criztovyl.tools.directory.DirectorySync;
+import de.joinout.criztovyl.tools.file.Path;
 
 /**
  * Represents the help parameter
@@ -27,20 +33,56 @@ import de.joinout.criztovyl.dirsync.Main;
  * @author criztovyl
  * 
  */
-public class Sync{
-	
+public class Sync {
+
 	// action
 	public final static ParameterAction ACTION = new ParameterAction() {
 
 		@Override
-		public void run(Parameters param) {
-			
-
+		public String getDescription() {
+			return Main.getString("Sync.Description");
 		}
 
 		@Override
-		public String getDescription() {
-			return Main.getString("Sync.Description");
+		public void run(Parameters param) {
+
+			final Logger logger = LogManager.getLogger();
+			
+			Path base = new Path(param.get(Names.PARAM_DIRECTORY).get(0));
+			
+			String regex = param.get(Names.PARAM_REGEX).wasPresent() ? param.get(Names.PARAM_REGEX).get(0) : "";
+			
+			if(param.getArguments().size() == 1){
+				
+				Path branch = new Path(param.getArguments().get(0).toString());
+				
+				DirectorySync ds = new DirectorySync(base, branch, regex);
+				
+				logger.debug(ds.getCurrentList());
+				logger.debug(ds.getPreviousList());
+				
+				logger.info("Changed: {}", ds.getChangedFiles());
+				logger.info("New    : {}", ds.getNewFiles());
+				logger.info("Deleted: {}", ds.getDeletedFiles());
+				
+				ds.sync();
+				
+				ds.save();
+				
+			}
+			else if(param.getArguments().size() >= 2){
+				
+				for(String branchS : param.get(Names.PARAM_DIRECTORY)){
+					
+					Path branch = new Path(branchS);
+					
+					new DirectorySync(base.append(branch.getBasename()), branch, regex).sync();
+				}
+			}
+
+			if(logger.isInfoEnabled())
+				logger.info("Done.");
+
 		}
 	};
 

@@ -19,8 +19,6 @@ package de.joinout.criztovyl.dirsync.commandline;
 
 import de.joinout.criztovyl.dirsync.commandline.parameters.Directory;
 import de.joinout.criztovyl.dirsync.commandline.parameters.Regex;
-import de.joinout.criztovyl.dirsync.commandline.parameters.Separator;
-import de.joinout.criztovyl.dirsync.commandline.parameters.Single;
 
 /**
  * @author criztovyl
@@ -28,14 +26,6 @@ import de.joinout.criztovyl.dirsync.commandline.parameters.Single;
  */
 public class Names {
 
-	/**
-	 * Long name for the {@link Separator} parameter
-	 */
-	public static final String PARAM_SEPARATOR = "separator";
-	/**
-	 * Short name for the {@link Separator} parameter
-	 */
-	public static final Character PARAM_SEPARATOR_SHORT = "s".charAt(0);
 	/**
 	 * Long name for the {@link Directory} parameter
 	 */
@@ -52,24 +42,12 @@ public class Names {
 	 * Short name for the {@link Regex} parameter
 	 */
 	public static final Character PARAM_REGEX_SHORT = "r".charAt(0);
-	/**
-	 * Long name for the {@link Single} parameter
-	 */
-	public static final String PARAM_SINGLE = "single";
-	/**
-	 * Short name for the {@link Single} parameter
-	 */
-	public static final Character PARAM_SINGLE_SHORT = "x".charAt(0);
-	
-	public static final String ACTION_UPDATE = "update";
-	
+
 	public static final String ACTION_LICENSE = "license";
-	
+
 	public static final String ACTION_LIST = "list";
-	
+
 	public static final String ACTION_SYNC = "sync";
-	
+
 	public static final String ACTION_HELP = "help";
-	
-	public static final String ACTION_RECOVER = "recover";
 }

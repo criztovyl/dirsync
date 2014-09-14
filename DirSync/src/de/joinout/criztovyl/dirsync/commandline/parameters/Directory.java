@@ -42,7 +42,8 @@ public class Directory extends Parameter {
 	// Set up size
 	private static final int size = 1;
 
-	private static final String description = Main.getString("Directory.Description");
+	private static final String description = Main
+			.getString("Directory.Description");
 
 	/**
 	 * Creates a new separator parameter

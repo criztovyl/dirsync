@@ -17,20 +17,13 @@
  */
 package de.joinout.criztovyl.dirsync;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.joinout.criztovyl.commandLineParameters.ParameterParser;
 import de.joinout.criztovyl.commandLineParameters.Parameters;
-import de.joinout.criztovyl.dirsync.commandline.Names;
-import de.joinout.criztovyl.dirsync.commandline.parameters.DirectoryUpdateParameterParser;
-import de.joinout.criztovyl.tools.directory.index.DirectoryIndex;
-import de.joinout.criztovyl.tools.directory.index.DirectoryIndexTools;
-import de.joinout.criztovyl.tools.file.Path;
+import de.joinout.criztovyl.dirsync.commandline.parameters.DirSyncParameters;
 import de.joinout.criztovyl.tools.log4j.Log4JEnvironment;
 import de.joinout.criztovyl.tools.strings.Strings;
 
@@ -71,27 +64,21 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		// Set up external strings
-		Main.messages = new Strings("de.joinout.criztovyl.dirsync.messages");
+		Main.messages = new Strings("de.joinout.criztovyl.dirsync.Strings");
 
-		//Set up main
+		// Set up main
 		Main.main = new Main(args);
 
-		//Run main
+		// Run main
 		Main.getMain().run();
 
 	}
 
 	private final Logger logger;
 
-	private final String separator, regex;
-
-	private final ArrayList<DirectoryIndex> sourceDirs;
-
-	private DirectoryIndex targetDir;
-	
 	private final Log4JEnvironment log4jenv;
 
-	private final ParameterParser params;
+	private final Parameters params;
 
 	public Main(String[] args) {
 
@@ -100,10 +87,10 @@ public class Main {
 		// Set up Log4J
 		log4jenv = new Log4JEnvironment();
 		logger = LogManager.getLogger();
-		
 
 		// Print out license
-		System.out.println(Main.messages.getString("Main.License", getString("Name")));
+		System.out.println(Main.messages.getString("Main.License",
+				Main.getString("Name")));
 
 		if (logger.isInfoEnabled())
 			logger.info(Main.messages.getString("Main.StartingMsg", this
@@ -120,69 +107,11 @@ public class Main {
 			logger.trace(Main.messages.getString("Main.ParamEnvSetupInfo"));
 
 		// Set up parameters
-		params = new DirectoryUpdateParameterParser(args);
+		params = new DirSyncParameters(args);
 
 		if (logger.isTraceEnabled())
 			logger.trace(Main.messages.getString("Main.ParamsParsedInfo"));
 
-		// Set up variables
-
-		if (logger.isTraceEnabled())
-			logger.trace(Main.messages
-					.getString("Main.SeperatorAndRegexSetupInfo"));
-
-		// Set path separator if was given as parameter, otherwise use
-		// File#separator
-
-		// Check if is in parameters
-		if (params.containsKey(Names.PARAM_SEPARATOR))
-
-			// Check if has value and was present
-			if (params.get(Names.PARAM_SEPARATOR).size() == 1
-					&& params.get(Names.PARAM_SEPARATOR).wasPresent())
-
-				// Set separator to first value
-				separator = params.get(Names.PARAM_SEPARATOR).get(0);
-			else
-				separator = File.separator;
-		else
-			separator = File.separator;
-
-		// Set up regular expression if was given as parameter, otherwise empty
-		// string
-
-		// Check if is in parameters
-		if (params.containsKey(Names.PARAM_REGEX))
-
-			// Check if has value and was present
-			if (params.get(Names.PARAM_REGEX).size() == 1
-					&& params.get(Names.PARAM_REGEX).wasPresent())
-
-				// Set regular expression to first value
-				regex = params.get(Names.PARAM_REGEX).get(0);
-			else
-				regex = "";
-		else
-			regex = "";
-
-		if (logger.isTraceEnabled())
-			logger.trace(Main.messages.getString("Main.SrcDirSetup"));
-		
-		//Set up tools
-		DirectoryIndexTools ditools = new DirectoryIndexTools(separator, regex);
-
-		// Set up source directories
-		sourceDirs = ditools.indexFromPathList(params.getArguments());
-
-		if (logger.isTraceEnabled())
-			logger.trace(Main.messages.getString("Main.DestDirSetup"));
-
-		// Set up target directory if was given as parameter
-		targetDir = null;
-		if (params.containsKey(Names.PARAM_DIRECTORY))
-			if (params.get(Names.PARAM_DIRECTORY).wasPresent())
-				targetDir = new DirectoryIndex(new Path(params.get(
-						Names.PARAM_DIRECTORY).get(0), separator), regex);
 
 		if (logger.isTraceEnabled())
 			logger.trace(Main.messages.getString("Main.SetupSuccessInfo", this
@@ -211,38 +140,8 @@ public class Main {
 		return params;
 	}
 
-	/**
-	 * @return the source directories
-	 */
-	public ArrayList<DirectoryIndex> getSourceDirs() {
-		return sourceDirs;
-	}
-
-	/**
-	 * @return the target directory
-	 */
-	public DirectoryIndex getTargetDir() {
-		return targetDir;
-	}
-
-	/**
-	 * 
-	 * @return true when source directories are not null
-	 */
-	public boolean hasSourceDirs() {
-		return sourceDirs != null;
-	}
-
-	/**
-	 * 
-	 * @return true when target directories is not null
-	 */
-	public boolean hasTargetDir() {
-		return targetDir != null;
-	}
-
 	public void run() {
-		
+
 		getParams().runAction();
 
 		if (getLogger().isInfoEnabled())

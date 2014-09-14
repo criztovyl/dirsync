@@ -17,43 +17,38 @@
  */
 package de.joinout.criztovyl.dirsync.commandline.parameters;
 
-import java.io.File;
-
-import de.joinout.criztovyl.commandLineParameters.Parameter;
-import de.joinout.criztovyl.commandLineParameters.ParameterName;
-import de.joinout.criztovyl.dirsync.commandline.Names;
+import de.joinout.criztovyl.commandLineParameters.Parameters;
+import de.joinout.criztovyl.dirsync.Main;
+import de.joinout.criztovyl.dirsync.commandline.actions.DirSyncActions;
 
 /**
- * Represents the separator parameter
- * 
  * @author criztovyl
  * 
  */
-public class Separator extends Parameter {
+public class DirSyncParameters extends Parameters {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2668134286080493306L;
-
-	// Set up name
-	public static final ParameterName NAME = new ParameterName(
-			Names.PARAM_SEPARATOR, Names.PARAM_SEPARATOR_SHORT);
-
-	// Set up size
-	private static final int size = 1;
+	private static final long serialVersionUID = -9073162484385676004L;
 
 	private static final String description = String
-			.format("This parameter should contain the separator of the entered paths. If not given '%s' (your system's default) will be used.%n"
-					+ "Example:%n" + "-s \"/\"%n" + "Use / as separator.",
-					File.separator);
+			.format(Main.getString("DirSynParameters.DescriptionText",
+					Main.getString("Name")));
 
 	/**
-	 * Creates a new separator parameter
+	 * Creates a new object that holds all command line parameters
 	 */
-	public Separator() {
-		super(Separator.size);
-		setDescription(Separator.description);
-	}
+	public DirSyncParameters(String[] args) {
 
+		// Set up map
+		super(DirSyncParameters.description);
+
+		// put parameters
+		put(Regex.NAME, new Regex());
+		put(Directory.NAME, new Directory());
+		getActions().putAll(new DirSyncActions());
+		parse(args);
+
+	}
 }

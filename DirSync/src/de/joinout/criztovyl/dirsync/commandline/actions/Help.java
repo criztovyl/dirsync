@@ -27,21 +27,20 @@ import de.joinout.criztovyl.dirsync.Main;
  * @author criztovyl
  * 
  */
-public class Help{
+public class Help {
 
 	// action
 	public static final ParameterAction ACTION = new ParameterAction() {
 
 		@Override
-		public void run(Parameters param) {
-			System.out.println(Main.getMain().getParams().getHelp());
-		}
-
-		@Override
 		public String getDescription() {
 			return Main.getString("Help.Description");
 		}
-	};
 
+		@Override
+		public void run(Parameters param) {
+			System.out.println(Main.getMain().getParams().getHelp());
+		}
+	};
 
 }

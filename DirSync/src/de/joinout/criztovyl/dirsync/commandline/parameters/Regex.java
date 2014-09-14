@@ -35,8 +35,8 @@ public class Regex extends Parameter {
 	private static final long serialVersionUID = 8046814675817098941L;
 
 	// Set up name
-	public static final ParameterName NAME = new ParameterName(Names.PARAM_REGEX,
-			Names.PARAM_REGEX_SHORT);
+	public static final ParameterName NAME = new ParameterName(
+			Names.PARAM_REGEX, Names.PARAM_REGEX_SHORT);
 
 	// Set up size
 	private static final int size = 1;

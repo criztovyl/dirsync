@@ -35,10 +35,15 @@ import de.joinout.criztovyl.dirsync.Main;
  * @author criztovyl
  * 
  */
-public class License{
-	
+public class License {
+
 	// action
 	public final static ParameterAction ACTION = new ParameterAction() {
+
+		@Override
+		public String getDescription() {
+			return Main.getString("License.Description");
+		}
 
 		@Override
 		public void run(Parameters param) {
@@ -64,11 +69,6 @@ public class License{
 			}
 			System.out.println(str);
 
-		}
-
-		@Override
-		public String getDescription() {
-			return Main.getString("License.Description");
 		}
 	};
 
