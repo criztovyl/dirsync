@@ -1,0 +1,7 @@
+If you get this as an not-runnable JAR-file (as from source code), you need Log4J and JSON for this project.
+
+They can be downloaded here:
+
+http://logging.apache.org/log4j/2.x/download.html (You esp. need log4j-api-2.0-rc2.jar and log4j-core-2.0-rc2.jar from the downloaded archive)
+
+http://search.maven.org/remotecontent?filepath=org/json/json/20140107/json-20140107.jar (Source and JavaDoc can be downloadad at http://search.maven.org/remotecontent?filepath=org/json/json/20140107/json-20140107-javadoc.jar and http://search.maven.org/remotecontent?filepath=org/json/json/20140107/json-20140107-sources.jar) 

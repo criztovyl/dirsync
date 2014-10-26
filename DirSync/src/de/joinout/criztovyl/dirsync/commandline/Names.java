@@ -17,6 +17,7 @@
  */
 package de.joinout.criztovyl.dirsync.commandline;
 
+import de.joinout.criztovyl.dirsync.Main;
 import de.joinout.criztovyl.dirsync.commandline.parameters.Directory;
 import de.joinout.criztovyl.dirsync.commandline.parameters.Regex;
 
@@ -29,25 +30,25 @@ public class Names {
 	/**
 	 * Long name for the {@link Directory} parameter
 	 */
-	public static final String PARAM_DIRECTORY = "directory";
+	public static final String PARAM_DIRECTORY = Main.getString("Names.Param.Long.Directory"); 
 	/**
 	 * Short name for the {@link Directory} parameter
 	 */
-	public static final Character PARAM_DIRECTORY_SHORT = "d".charAt(0);
+	public static final Character PARAM_DIRECTORY_SHORT = Main.getString("Names.Param.Short.Directory").charAt(0); 
 	/**
 	 * Long name for the {@link Regex} parameter
 	 */
-	public static final String PARAM_REGEX = "regex";
+	public static final String PARAM_REGEX = Main.getString("Names.Param.Long.Regex"); 
 	/**
 	 * Short name for the {@link Regex} parameter
 	 */
-	public static final Character PARAM_REGEX_SHORT = "r".charAt(0);
+	public static final Character PARAM_REGEX_SHORT = Main.getString("Names.Param.Short.Regex").charAt(0); 
 
-	public static final String ACTION_LICENSE = "license";
+	public static final String ACTION_LICENSE = Main.getString("Names.Param.Action.License"); 
 
-	public static final String ACTION_LIST = "list";
+	public static final String ACTION_SYNC = Main.getString("Names.Param.Action.Sync"); 
 
-	public static final String ACTION_SYNC = "sync";
-
-	public static final String ACTION_HELP = "help";
+	public static final String ACTION_HELP = Main.getString("Names.Param.Action.Help"); 
+	
+	public static final String ACTION_VERSION = Main.getString("Names.Param.Action.Version"); 
 }

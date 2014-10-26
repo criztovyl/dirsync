@@ -36,6 +36,8 @@ public class Main {
 	private static Main main;
 
 	private static Strings messages;
+	
+	public static final String version = "2014-10-06#01";
 
 	/**
 	 * 
@@ -146,6 +148,10 @@ public class Main {
 
 		if (getLogger().isInfoEnabled())
 			getLogger().info(Main.messages.getString("Main.EndInfo"));
+	}
+
+	public static String getVersion() {
+		return version;
 	}
 
 }

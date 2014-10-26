@@ -17,6 +17,8 @@
  */
 package de.joinout.criztovyl.dirsync.commandline.parameters;
 
+import de.joinout.criztovyl.commandLineParameters.Parameter;
+import de.joinout.criztovyl.commandLineParameters.ParameterName;
 import de.joinout.criztovyl.commandLineParameters.Parameters;
 import de.joinout.criztovyl.dirsync.Main;
 import de.joinout.criztovyl.dirsync.commandline.actions.DirSyncActions;
@@ -47,6 +49,7 @@ public class DirSyncParameters extends Parameters {
 		// put parameters
 		put(Regex.NAME, new Regex());
 		put(Directory.NAME, new Directory());
+		put(new ParameterName("interactive", "i".charAt(0)), new Parameter());
 		getActions().putAll(new DirSyncActions());
 		parse(args);
 
